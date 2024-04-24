@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <link rel="stylesheet" href="style.css">
+        </head>
+            <body>
+                <div id="app">
+                    <div id="login" v-if="showLogin">
+                        <h1>Login</h1>
+                        <label>Email:</label>
+                        <input type="text" placeholder="johndoe@gmail.com" v-model="email"> 
+                        <span :style="errorStyleForField('email')">{{ errorMessageForField('email') }}</span>
+                        <label>Password:</label>
+                        <input type="password" v-model="plainPassword"> 
+                        <span :style="errorStyleForField('plainPassword')">{{ errorMessageForField('plainPassword') }}</span>
+                        <br>
+                        <div class="center">
+                        <button class="button" @click="showRegisterPage">Register Here</button>
+                        <button class="button" @click="Login">Login</button>
+                        </div>
+                    </div>
+                    <div id="register" v-if="showRegister">
+                        <h1>Register</h1>
+                        <label>First Name:</label>
+                        <input type="text" placeholder="John" v-model="firstName"> 
+                        <span :style="errorStyleForField('firstName')">{{ errorMessageForField('firstName') }}</span>
+                        <label>Last Name:</label>
+                        <input type="text" placeholder="Doe" v-model="lastName"> 
+                        <span :style="errorStyleForField('lastName')">{{ errorMessageForField('lastName') }}</span>
+                        <label>Email:</label>
+                        <input type="text" placeholder="johndoe@gmail.com" v-model="email"> 
+                        <span :style="errorStyleForField('email')">{{ errorMessageForField('email') }}</span>
+                        <label>Password:</label>
+                        <input type="password" v-model="plainPassword"> 
+                        <span :style="errorStyleForField('plainPassword')">{{ errorMessageForField('plainPassword') }}</span>
+                        <br>
+                        <div class="center">
+                            <button class="button" @click="showLoginPage">Login Here</button>
+                            <button class="button" @click="addUser">Register</button>
+                        </div>
+                    </div>
+                    <div class="header" v-if="showHeader">
+                        <h1 class="title" @click="close">Git Fit Goals</h1>
+                        <button class="button" @click="Logout">Logout</button>
+                        <img src="gitlogo.png" class="logo" style="width: 50px;">
+                    </div>
+                    <div class="main-page" v-if="showNav">
+                        <nav> 
+                            <ul class ="nav">
+                                <li><button class="button" @click="newGoal">New Goal</button></li>
+                                <li><button class="button" @click="displayGoals">View Goals</button></li>
+                                <li><button class="button" @click="tipsntricks">Tips & Tricks</button></li>
+                                <li><button class="button" @click="showExerciseAPI">Exercises</button></li>
+                                <li><button class="button" @click="showMacroAPI">Macros</button></li>
+                            </ul>                                                    
+                        </nav>
+                    </div>
+                    <br>
+                    <div v-if="showHome">
+                        <div class="goals-container">
+                            <div class="ind-item">
+                            <h2>About Us</h2>
+                            <p>Welcome to Git Fit Goals! Your ultimate fitness companion awaits. Here, set goals, track progress, and explore effective exercises. With our support, achieving your fitness goals is within reach. Let's Git Fit together!</p>
+                            </div>
+                            <div class="ind-item">
+                            <h2>Getting Started</h2>
+                            <p>Ready to start your fitness journey with Git Fit Goals? Define Your Goals: Set clear fitness objectives. Explore Exercises: Discover easy-to-follow workouts. Monitor Your Nutrition: Track your daily macros. Stay Inspired: Find expert tips. Let's Git Fit together!</p>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div style="text-align: center;">
+                            <img src="homepage.png" alt="homepage icons" style="width: 500px; height: auto;">
+                        </div>
+                        <div class="muscle-groups">
+                            <button class="button" @click="chooseMuscleGroup('Upper Body')">Upper Body</button>
+                            <button class="button" @click="chooseMuscleGroup('Lower Body')">Lower Body</button>
+                          </div>
+                          <div class="bingo-board">
+                              <div v-for="(row, rowIndex) in boardState" :key="rowIndex" class="bingo-row">
+                                  <div v-for="(cell, colIndex) in row" :key="colIndex" class="cell"
+                                    :class="{ selected: selectedCell && selectedCell.rowIndex === rowIndex && selectedCell.colIndex === colIndex }"
+                                       @click="markCell(rowIndex, colIndex)">
+                                    {{ cell }}
+                                  </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="main-pg" v-if="showNewGoalInputs">
+                        <h2>Enter Your Name</h2>
+                        <label>
+                            Name:
+                        <input type="text" placeholder="Enter your name here" v-model="name">
+                        <span :style="errorStyleForField('name')">{{ errorMessageForField('name') }}</span>
+                        </label>
+                        <br>
+                        <label>
+                            My Goal:
+                        <input type="text" placeholder="Enter your goal here" v-model="myGoal">
+                        <span :style="errorStyleForField('myGoal')">{{ errorMessageForField('myGoal') }}</span>
+                        </label>
+                        <br>
+                        <label>
+                            Frequency:
+                        </label>
+                        <select v-model="frequency">
+                            <option value="Monthly">Monthly</option>
+                            <option value="Weekly">Weekly</option>
+                            <option value="Daily">Daily</option>
+                            <option value="Twice Daily">Twice Daily</option>
+                            </select>
+                        <span :style="errorStyleForField('frequency')">{{ errorMessageForField('frequency') }}</span>
+                        <br>
+                        <br>
+                        <label>
+                            Duration:
+                        <input type="text" placeholder="Enter the time frame that you want to achieve your goal" v-model="duration">
+                        <span :style="errorStyleForField('duration')">{{ errorMessageForField('duration') }}</span>
+                        </label>
+                        <br>
+                        <label>
+                            Why:
+                        <input type="text" placeholder="Enter your reason for setting this goal" v-model="why">
+                        <span :style="errorStyleForField('why')">{{ errorMessageForField('why') }}</span>
+                        </label>
+                        <br>
+                        <label>
+                            When:
+                        <input type="text" placeholder="Enter the time of day that you'll work towards your goal" v-model="when">
+                        <span :style="errorStyleForField('when')">{{ errorMessageForField('when') }}</span>
+                        </label>
+                        <br>
+                    <div class="center">
+                    <button class="button" @click="goalButtonClickHandler">Add Goal</button>
+                    <button class="button" @click="close">Close</button>
+                    </div>
+                    </div>
+                    <div v-else-if="showMacros">
+                        <h2>Macro Counter</h2>
+                        <label>
+                            Food Items/Ingredients:
+                        <input type="text" placeholder="Enter a list of foods here single spaced" v-model="macros">
+                        </label>
+                        <br>
+                    <div class="center">
+                    <button class="button" @click="macroButtonClickHandler">Count Macros</button>
+                    <button class="button" @click="close">Close</button>
+                    </div>
+                    </div>
+
+                    <div v-if="showMacros && macroData && macroData.length > 0">
+                        <h2>Macro Information</h2>
+                        <ul>
+                            <div class="macro-container">
+                            <li class="macro-item" v-for="(macro, index) in macroData" :key="index">
+                                <strong>Name:</strong> {{ macro.name }} <br>
+                                <strong>Protein:</strong> {{ macro.protein_g }} <br>
+                                <strong>Total Fat:</strong> {{ macro.fat_total_g }} <br>
+                                <strong>Carbs:</strong> {{ macro.carbohydrates_total_g }} <br>
+                                <strong>Sugar:</strong> {{ macro.sugar_g }} <br>
+                                <strong>Sodium:</strong> {{ macro.sodium_mg }} <br>
+                            </li>
+                            </div>
+                        </ul>
+                        <button class="button" @click="clearMacroData">Clear Macros</button>
+                    </div>
+                    <div v-else-if="showMacros && macroData == []">
+                        <p>No macro data available.</p>
+                    </div>
+                    <div v-if="showExercises">
+                        <h2>Exercises</h2>
+                        <label>
+                            <label>
+                                Muscle Group:
+                                <select v-model="exercises">
+                                    <option value="abdominals">Abdominals</option>
+                                    <option value="abductors">Abductors</option>
+                                    <option value="adductors">Adductors</option>
+                                    <option value="biceps">Biceps</option>
+                                    <option value="calves">Calves</option>
+                                    <option value="chest">Chest</option>
+                                    <option value="forearms">Forearms</option>
+                                    <option value="glutes">Glutes</option>
+                                    <option value="hamstrings">Hamstrings</option>
+                                    <option value="lats">Lats</option>
+                                    <option value="lower_back">Lower Back</option>
+                                    <option value="middle_back">Middle Back</option>
+                                    <option value="neck">Neck</option>
+                                    <option value="quadriceps">Quads</option>
+                                    <option value="traps">Traps</option>
+                                    <option value="triceps">Triceps</option>
+                                </select>
+                            </label>
+                        <br>
+                    <div class="center">
+                    <button class="button" @click="exerciseButtonClickHandler">Find Exercises</button>
+                    <button class="button" @click="close">Close</button>
+                    </div>
+                    </div>
+                    <div v-if="showExercises && exerciseData && exerciseData.length > 0">
+                        <ul>
+                            <div class="exercise-container">
+                            <li class="ind-item" v-for="(exercise, index) in exerciseData" :key="index">
+                                <strong>Name:</strong> {{ exercise.name }} <br>
+                                <strong>Type:</strong> {{ exercise.type }} <br>
+                                <strong>Muscle:</strong> {{ exercise.muscle }} <br>
+                                <strong>Equipment:</strong> {{ exercise.equipment }} <br>
+                                <strong>Difficulty:</strong> {{ exercise.difficulty }} <br>
+                                <strong>Instructions:</strong> {{ exercise.instructions }} <br>
+                            </li>
+                            </div>
+                        </ul>
+                        <button class="button" @click="clearExerciseData">Clear Exercises</button>
+                    </div>
+                    <div v-else-if="showExercises && exerciseData == []">
+                        <p>No exercise data available.</p>
+                    </div>
+                    <div v-if="showTipsnTricks">
+                        <h2>Tips n Tricks</h2>
+                        <div class="goals-container">
+                            <div class="ind-item" v-for="(tip, index) in tipsAndTricks" :key="index">
+                                <h2><strong>{{ tip.title }}</strong></h2>
+                                <p>{{ tip.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="showGoals">
+                        <h2> My Goals</h2>
+                        <div class="goals-container">
+                            <div class="ind-item" v-for="(goal, index) in goals" :key="index">
+                                <h3><strong>Name: </strong> {{ goal.name }}</h3>
+                                <h3><strong>Goal: </strong> {{ goal.myGoal }}</h3>
+                                <p><strong>Frequency: </strong> {{ goal.frequency }}</p>
+                                <p><strong>Duration: </strong> {{ goal.duration }}</p>
+                                <p><strong>Why: </strong> {{ goal.why }}</p>
+                                <p><strong>When: </strong> {{ goal.when }}</p>
+                                <div class="center">
+                                <button class="button" @click="deleteGoal(goal._id)">Complete</button>
+                                <button class="button" @click="openEditModal(goal)">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="showEditModal">
+                        <h2>Edit Goal</h2>
+                        <label>Name: {{ editedGoal.name }}
+                        <span :style="errorStyleForField('name')">{{ errorMessageForField('name') }}</span>
+                        </label>
+                        <br>
+                        <label>My Goal:
+                        <input type="text" placeholder="Enter your goal Here" v-model="editedGoal.myGoal">
+                        <span :style="errorStyleForField('myGoal')">{{ errorMessageForField('myGoal') }}</span>
+                        </label>
+                        <br>
+                        <label>Frequency:
+                        <select v-model="editedGoal.frequency">
+                            <option value="Monthly">Monthly</option>
+                            <option value="Weekly">Weekly</option>
+                            <option value="Daily">Daily</option>
+                            <option value="Twice Daily">Twice Daily</option>
+                            </select>
+                        <span :style="errorStyleForField('frequency')">{{ errorMessageForField('frequency') }}</span>
+                        </label>
+                        <br>
+                        <label>Duration:
+                        <input type="text" placeholder="Enter the time frame that you want to achieve your goal" v-model="editedGoal.duration">
+                        <span :style="errorStyleForField('duration')">{{ errorMessageForField('duration') }}</span>
+                        </label>
+                        <br>
+                        <label>Why:
+                        <input type="text" placeholder="Enter your reason for setting this goal" v-model="editedGoal.why">
+                        <span :style="errorStyleForField('why')">{{ errorMessageForField('why') }}</span>
+                        </label>
+                        <br>
+                        <label>When:
+                        <input type="text" placeholder="Enter the time of day that you'll work towards your goal" v-model="editedGoal.when">
+                        <span :style="errorStyleForField('when')">{{ errorMessageForField('when') }}</span>
+                        </label>
+                        <br>
+                        <div class="center">
+                        <button class="button" @click="editGoal">Save</button>
+                        <button class="button" @click="cancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+                <script src="app.js"></script>
+            </body>
+    </html>
+        

@@ -1,0 +1,225 @@
+@font-face {
+    font-family: 'sport-bd';
+    src: url('Fonts/atha-bd.ttf') format('truetype');
+}   
+@font-face {
+    font-family: 'sport';
+    src: url('Fonts/athaNorm.ttf') format('truetype');
+}  
+.main-page input label select li h2 h3 {
+    font-family: sport;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: white;
+    font-family:sport;
+}
+#app {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+h1 {
+    text-align: center;
+    color: #fff;
+    font-size:50px;
+    font-family: sport-bd;
+}
+.main-page {
+    background-color: #3d3d3d; 
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.sidenav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sport;
+}
+.nav li {
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+.button {
+    width: 150px;
+    background-color: #9b16ee; 
+    border: none;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 19px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin-left: 4px;
+    margin-right: 4px;
+    font-family: sport-bd;
+}
+.button:hover {
+    background-color: #6a1b9a; 
+}
+.main-pg {
+    margin-bottom: 20px;
+}
+input[type="text"],
+input[type="password"],
+
+button {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #2f2f2f; 
+    color: #fff; 
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff; 
+    font-size: 20px;
+}
+.error-message {
+    color: red;
+    font-size: 14px;
+}
+select {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #2f2f2f;
+    color: #fff; 
+}
+select:hover {
+    background-color:#414040;
+}
+select option {
+    background-color: #2f2f2f; 
+    color: #fff;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+li:last-child {
+    margin-bottom: 0;
+}
+
+h2 {
+    margin-top: 0;
+    text-align: center;
+    font-size: 30px;
+}
+h1:hover{
+    color: #6a1b9a; 
+    cursor: pointer;
+}
+p {
+    margin-top: 0;
+}
+
+.goals-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; 
+
+}
+.macro-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    line-height: 25px;
+}
+.exercise-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; 
+    line-height:25px;
+}
+.center {
+    text-align: center;
+}
+.ind-item {
+    box-sizing: border-box;
+    border: 2px solid #9b16ee;
+    border-radius: 4px;
+    padding: 10px;
+    height: auto;
+    flex: 1 1 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+    margin-bottom: 20px;
+}
+.macro-item {
+    box-sizing: border-box;
+    border: 2px solid #9b16ee;
+    border-radius: 4px;
+    padding: 10px;
+    height: auto;
+    flex: 1 1 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+    margin-bottom: 20px;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    text-align: center;
+    flex-grow: 1; 
+}
+
+.logo {
+    margin-left: auto; 
+}
+.muscle-groups {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bingo-board {
+    display: flex;
+    align-items: center;
+}
+
+.cell {
+    display: inline-block;        
+    height: 150px;
+    width: 150px;
+    border: 1px solid #000;
+    text-align: center;
+    justify-content: center;
+    line-height: 20px;
+    margin: 1px;
+    background-color:#414040;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #6a1b9a;
+}
